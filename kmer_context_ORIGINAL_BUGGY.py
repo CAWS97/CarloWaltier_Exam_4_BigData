@@ -49,7 +49,7 @@ def count_kmers_with_context(sequence, k):
 
 def write_results_to_file(kmer_data, output_file):
     with open(output_file, "w") as f:
-        for kmer in kmer_data:
+        for kmer in sorted(kmer_data):  # Sort kmers lexicographically
             line = kmer + " " + str(kmer_data[kmer]["count"])
             for c in kmer_data[kmer]["next_chars"]:
                 line += " " + c + ":" + str(kmer_data[kmer]["next_chars"][c])
