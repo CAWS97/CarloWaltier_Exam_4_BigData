@@ -16,8 +16,9 @@ import sys
 
 
 def validate_sequence(sequence):
+    valid = {"A", "C", "G", "T"}
     for char in sequence:
-        if char.isdigit():
+        if char not in valid:
             return False
     return True
 
