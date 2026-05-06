@@ -71,18 +71,21 @@ def main():
     with open(input_file) as f:
         for line in f:
             sequence = line.strip()
-            if validate_sequence(sequence):
-                kmer_data = count_kmers_with_context(sequence, k)
-                # Merge kmer_data into all_kmer_data
-                for kmer, data in kmer_data.items():
-                    if kmer not in all_kmer_data:
-                        all_kmer_data[kmer] = {"count": 0, "next_chars": {}}
-                    all_kmer_data[kmer]["count"] += data["count"]
-                    for next_char, count in data["next_chars"].items():
-                        if next_char in all_kmer_data[kmer]["next_chars"]:
-                            all_kmer_data[kmer]["next_chars"][next_char] += count
-                        else:
-                            all_kmer_data[kmer]["next_chars"][next_char] = count
+            if not validate_sequence(sequence):
+                # Confirm validator rejects only invalid DNA sequences
+                print(f" Warning: Skipping invalid sequence: {sequence[:30]}")
+                continue
+            kmer_data = count_kmers_with_context(sequence, k)
+            # Merge kmer_data into all_kmer_data
+            for kmer, data in kmer_data.items():
+                if kmer not in all_kmer_data:
+                    all_kmer_data[kmer] = {"count": 0, "next_chars": {}}
+                all_kmer_data[kmer]["count"] += data["count"]
+                for next_char, count in data["next_chars"].items():
+                    if next_char in all_kmer_data[kmer]["next_chars"]:
+                        all_kmer_data[kmer]["next_chars"][next_char] += count
+                    else:
+                        all_kmer_data[kmer]["next_chars"][next_char] = count
 
     write_results_to_file(all_kmer_data, output_file)
 
