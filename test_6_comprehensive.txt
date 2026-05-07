@@ -4,10 +4,16 @@ GC
 GCA
 AAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAA78AAAAAAAAAAA
+# rejected: contains digits 7 and 8
 gcatgcatgcatgcat
+# rejected: has lowercase letters
 CGACGA
 ABCDEFGHIJ
+# rejected: contains non-DNA letters
 CATGHSDKJGHTCAGCTAC
+# rejected: has invalid characters S, D, K, H
 123
+# rejected: only digits
 /.,-=-`/.,
+# rejected: special characters
 GCTATTTGCCTAGC
