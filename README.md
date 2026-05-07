@@ -21,7 +21,7 @@ This kind of count is a starting point for genome assembly, where overlapping pi
 ```
 .
 ├── README.md                         # This file
-├── TEST_SUMMARY.md                   # Initial notes on bugs that were found and fixed early on
+├── initial_TEST_SUMMARY.md            # Initial notes on bugs that were found and fixed early on
 ├── kmer_context_FINAL.py             # The main script
 ├── test_kmer_context.py              # Pytest test file
 └── tests/
@@ -30,7 +30,7 @@ This kind of count is a starting point for genome assembly, where overlapping pi
     │   ├── test_2_cross_sequence.txt
     │   ├── test_3_mixed_sequence.txt
     │   ├── test_4_edge_invalid.txt
-    │   ├── test_5_mixedvalidity.txt
+    │   ├── test_5_mixedvalidity.txtre
     │   └── test_6_comprehensive.txt
     └── expected_outputs/             # What the output should look like for each test
         ├── results_simple_sorted.txt
