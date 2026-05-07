@@ -105,36 +105,39 @@ def write_results_to_file(kmer_data, output_file):
 
 
 def main():
-    """Run the whole k-mer analysis with user prompts.
+    """Run the whole k-mer analysis from the command line.
 
-    This asks for the input file path, the k value, and the output path, then
-    reads sequences, skips invalid DNA, counts k-mers, and saves the result.
+    This reads the input file, k value, and output path from command-line
+    arguments, then reads sequences, skips invalid DNA, counts k-mers, and
+    saves the result to the output file.
 
     Args:
         None
 
     Returns:
-        None: uses input prompts and writes the result file.
+        None: reads from command-line arguments and writes the result file.
     """
-    # FIXED: Replaced sys.argv with input() for interactive prompts
-    # Original bug: Used command-line args which caused IndexError when none provided
-    input_file = input("Enter input file path: ")
-    k = int(input("Enter k-mer length (k): "))
-    output_file = input("Enter output file path: ")
+    # Check that the user provided the right number of arguments
+    if len(sys.argv) != 4:
+        print("Usage: python kmer_context.py <input_file> <k> <output_file>")
+        sys.exit(1)
 
-    # FIXED: Accumulate all kmer data before writing, instead of overwriting file per sequence
-    # Original bug: write_results_to_file() called for each sequence with "w" mode,
-    # causing only the last sequence's results to be saved
+    # Read arguments from the command line
+    input_file = sys.argv[1]
+    k = int(sys.argv[2])
+    output_file = sys.argv[3]
+
+    # Build up k-mer data across every valid sequence in the file
     all_kmer_data = {}
     with open(input_file) as f:
         for line in f:
             sequence = line.strip()
             if not validate_sequence(sequence):
-                # Confirm validator rejects only invalid DNA sequences
+                # Skip and warn about any line that isn't valid DNA
                 print(f" Warning: Skipping invalid sequence: {sequence[:30]}")
                 continue
             kmer_data = count_kmers_with_context(sequence, k)
-            # Merge kmer_data into all_kmer_data
+            # Merge this sequence's counts into the running total
             for kmer, data in kmer_data.items():
                 if kmer not in all_kmer_data:
                     all_kmer_data[kmer] = {"count": 0, "next_chars": {}}
@@ -145,6 +148,7 @@ def main():
                     else:
                         all_kmer_data[kmer]["next_chars"][next_char] = count
 
+    # Write the combined results, sorted alphabetically
     write_results_to_file(all_kmer_data, output_file)
 
 
