@@ -5,7 +5,7 @@ A k-mer is a short DNA substring of length k. This script also tracks the
 letter that appears right after each k-mer in valid DNA lines.
 
 Run with:
-    python kmer_context_ORIGINAL_BUGGY.py
+    python kmer_context_FINAL.py <input_file> <k> <output_file>
 
 Input file should have one DNA sequence per line, using only A, C, G, and T.
 Output file has one k-mer per line with its count and the counts of the letters
@@ -119,7 +119,7 @@ def main():
     """
     # Check that the user provided the right number of arguments
     if len(sys.argv) != 4:
-        print("Usage: python kmer_context.py <input_file> <k> <output_file>")
+        print("Usage: python kmer_context_FINAL.py <input_file> <k> <output_file>")
         sys.exit(1)
 
     # Read arguments from the command line
